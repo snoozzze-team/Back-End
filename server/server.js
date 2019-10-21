@@ -19,6 +19,6 @@ server.use(helmet());
 server.use('/api/auth', authRouter);
 
 //set all user routes to require authentication
-server.use('/api/user', authenticate, userRouter);
+server.use('/api/user', userRouter);
 
 module.exports = server;
