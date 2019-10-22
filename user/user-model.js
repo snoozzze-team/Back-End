@@ -27,6 +27,7 @@ function getUserBy(filter) {
 function getUserSleepData(id) {
     return db('sleepData as s')
         .join('users as u', 'u.id', 's.userId')
+        .select('s.id', 's.userId', 's.dateTimeFrom', 's.dateTimeTo', 's.feels', 's.notes')
         .where({userId: id})
         .orderBy('s.id');
 }

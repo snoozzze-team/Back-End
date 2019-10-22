@@ -10,6 +10,7 @@ function authenticate(req, res, next) {
               res.status(401).json(err);
           } else {
               req.user = {
+                  id: decodedToken.id,
                   email: decodedToken.email,
                   username: decodedToken.username
               };

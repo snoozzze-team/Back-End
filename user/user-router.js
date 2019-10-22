@@ -13,8 +13,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/sleepdata', (req, res) => {
-    const token = req.headers.authorization;
-    const userId = token.payload.id;
+    const userId = req.user.id;
     Users.getUserSleepData(userId)
     .then(data => {
         res.json(data);
