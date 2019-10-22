@@ -5,6 +5,7 @@ module.exports = {
     getUserById,
     getUserBy,
     getUserSleepData,
+    addUserSleepData,
     addUser
 }
 
@@ -30,6 +31,11 @@ function getUserSleepData(id) {
         .select('s.id', 's.userId', 's.dateTimeFrom', 's.dateTimeTo', 's.feels', 's.notes')
         .where({userId: id})
         .orderBy('s.id');
+}
+
+function addUserSleepData(data) {
+    return db('sleepData')
+        .insert(data);
 }
 
 async function addUser(user) {
