@@ -12,4 +12,16 @@ router.get('/', (req, res) => {
     })
 });
 
+router.get('/sleepdata', (req, res) => {
+    const token = req.headers.authorization;
+    const userId = token.payload.id;
+    Users.getUserSleepData(userId)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+})
+
 module.exports = router;
