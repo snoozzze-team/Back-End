@@ -23,13 +23,14 @@ router.post('/register', validateUserData, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    const {email, password} = req.body;
-    Users.getUserBy({email})
+    const {username, password} = req.body;
+    Users.getUserBy({username})
     .then(user => {
         if(user && bcrypt.compare(password, user.password)) {
             const token = generateToken(user);
-            res.status(200).json({message: `Welcome, ${email}`, token: `${token}`});
+            res.status(200).json({message: `Welcome, ${username}`, token: `${token}`});
         } else {
+            console.log(username)
             res.status(404).json({error: 'invalid user credentials'});
         }
     })
@@ -38,7 +39,8 @@ router.post('/login', (req, res) => {
 function generateToken(user) {
     const payload = {
         id: user.id,
-        email: user.email
+        email: user.email,
+        username: user.username
     }
     return jwt.sign(payload, secrets.jwtSecret);
 };
