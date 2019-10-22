@@ -33,8 +33,9 @@ router.get('/sleepdata', (req, res) => {
     Users.getUserSleepData(userId)
     .then(data => {
         data.map(obj => {
-            const tempDateTimeFrom = '2019-10-22T23:00';
-            const tempDateTimeTo = '2019-10-23T08:00';
+            console.log(obj)
+            const tempDateTimeFrom = obj.dateTimeFrom;
+            const tempDateTimeTo = obj.dateTimeTo;
             const from = tempDateTimeFrom.slice('T:');
             const to = tempDateTimeTo.slice('T:');
             const dateTimeFrom = moment(from).format('lll');
