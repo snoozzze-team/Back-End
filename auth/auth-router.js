@@ -3,19 +3,37 @@ const router = require('express').Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-const Users = require('../users/user-model.js/index.js');
+const Users = require('../user/user-model.js');
 
 const validateUserData = require('../middleware/validate-user-data-middleware.js');
 
 const secrets = require('../config/secrets.js');
 
 router.post('/register', validateUserData, (req, res) => {
-
-})
+    const userData = req.body;
+    const hash = bcrypt.hashSync(userData.password, 12);
+    userData.password = hash;
+    Users.addUser(userData)
+    .then(user => {
+        res.status(201).json({message: 'user created'});
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+});
 
 router.post('/login', (req, res) => {
-    
-})
+    const {email, password} = req.body;
+    Users.getUserBy({email})
+    .then(user => {
+        if(user && bcrypt.compare(password, user.password)) {
+            const token = generateToken(user);
+            res.status(200).json({message: `Welcome, ${email}`, token: `${token}`});
+        } else {
+            res.status(404).json({error: 'invalid user credentials'});
+        }
+    })
+});
 
 function generateToken(user) {
     const payload = {
