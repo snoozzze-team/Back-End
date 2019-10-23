@@ -17,37 +17,6 @@ router.get('/', (req, res) => {
     })
 });
 
-// router.get('/:id', (req, res) => {
-//     const {id} = req.params;
-//     Users.getUserById(id)
-//     .then(user => {
-//         if (user) {
-//             res.status(200).json(user);
-//         } else {
-//             res.status(404).json(user);
-//         }
-//     })
-//     .catch(err => {
-//         res.status(500).json(err);
-//     })
-// });
-
-// router.put('/:id', (req, res) => {
-//     const changes = req.body;
-//     const {id} = req.params;
-//     Users.updateUser(id, changes)
-//     .then(user => {
-//         if (user) {
-//             res.status(200).json({user});
-//         } else {
-//             res.status(404).json(user);
-//         }
-//     })
-//     .catch(err => {
-//         res.status(500).json(err);
-//     })
-// });
-
 //Sleep data
 
 router.post('/sleepdata', validateSleepData, (req, res) => {
