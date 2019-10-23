@@ -17,32 +17,36 @@ router.get('/', (req, res) => {
     })
 });
 
-router.get('/:id', (req, res) => {
-    const {id} = req.params;
-    Users.getUserById(id)
-    .then(user => {
-        res.status(200).json(user);
-    })
-    .catch(err => {
-        res.status(500).json(err);
-    })
-});
+// router.get('/:id', (req, res) => {
+//     const {id} = req.params;
+//     Users.getUserById(id)
+//     .then(user => {
+//         if (user) {
+//             res.status(200).json(user);
+//         } else {
+//             res.status(404).json(user);
+//         }
+//     })
+//     .catch(err => {
+//         res.status(500).json(err);
+//     })
+// });
 
-router.put('/:id', (req, res) => {
-    const changes = req.body;
-    const {id} = req.params;
-    Users.updateUser(id, changes)
-    .then(user => {
-        if (user[0]) {
-            res.status(200).json(user);
-        } else {
-            res.status(404).json(user);
-        }
-    })
-    .catch(err => {
-        res.status(500).json(err);
-    })
-});
+// router.put('/:id', (req, res) => {
+//     const changes = req.body;
+//     const {id} = req.params;
+//     Users.updateUser(id, changes)
+//     .then(user => {
+//         if (user) {
+//             res.status(200).json({user});
+//         } else {
+//             res.status(404).json(user);
+//         }
+//     })
+//     .catch(err => {
+//         res.status(500).json(err);
+//     })
+// });
 
 //Sleep data
 
@@ -52,7 +56,7 @@ router.post('/sleepdata', validateSleepData, (req, res) => {
     sleepData.userId = userId;
     Users.addUserSleepData(sleepData)
     .then(data => {
-        res.json(data);
+        res.status(201).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
@@ -73,7 +77,7 @@ router.get('/sleepdata', (req, res) => {
             obj.dateTimeFrom = dateTimeFrom;
             obj.dateTimeTo = dateTimeTo;
         })
-        res.json(data);
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
@@ -84,19 +88,19 @@ router.delete('/sleepdata/:id', (req, res) => {
     const {id} = req.params;
     Users.deleteUserSleepData(id)
     .then(data => {
-        res.json({message: 'successfully deleted sleep data'});
+        res.status(200).json({message: 'successfully deleted sleep data'});
     })
     .catch(err => {
         res.status(500).json(err);
     })
 })
 
-router.put('/sleepdata/:id', validateSleepData, (req, res) => {
+router.put('/sleepdata/:id', (req, res) => {
     const changes = req.body;
     const {id} = req.params;
     Users.updateUserSleepData(id, changes)
     .then(data => {
-        res.json(changes);
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);

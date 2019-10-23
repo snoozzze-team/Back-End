@@ -7,7 +7,6 @@ module.exports = {
     addUser,
     updateUser,
     getUserSleepData,
-    getUserSleepDataById,
     addUserSleepData,
     deleteUserSleepData,
     updateUserSleepData
@@ -15,13 +14,6 @@ module.exports = {
 
 function getUsers() {
     return db('users');
-}
-
-function getUserById(id) {
-    return db('users')
-        .select('id', 'email', 'username')
-        .where({ id })
-        .first();
 }
 
 function getUserBy(filter) {
@@ -36,24 +28,12 @@ async function addUser(user) {
     return getUserById(id);
 }
 
-function updateUser(id, changes) {
-    return db('users')
-        .update(changes)
-        .where({ id })
-}
-
 function getUserSleepData(id) {
     return db('sleepData as s')
         .join('users as u', 'u.id', 's.userId')
         .select('s.id', 's.userId', 's.dateTimeFrom', 's.dateTimeTo', 's.feels', 's.notes')
         .where({ userId: id })
         .orderBy('s.id');
-}
-
-function getUserSleepDataById(id) {
-    return db('sleepData')
-        .where({ id })
-        .first();
 }
 
 function addUserSleepData(data) {
