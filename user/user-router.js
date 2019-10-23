@@ -5,6 +5,8 @@ const moment = require('moment');
 
 const validateSleepData = require('../middleware/validate-sleep-data.js');
 
+//User
+
 router.get('/', (req, res) => {
     Users.getUsers()
     .then(users => {
@@ -14,6 +16,35 @@ router.get('/', (req, res) => {
         res.status(500).json(err);
     })
 });
+
+router.get('/:id', (req, res) => {
+    const {id} = req.params;
+    Users.getUserById(id)
+    .then(user => {
+        res.status(200).json(user);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+});
+
+router.put('/:id', (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+    Users.updateUser(id, changes)
+    .then(user => {
+        if (user[0]) {
+            res.status(200).json(user);
+        } else {
+            res.status(404).json(user);
+        }
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+});
+
+//Sleep data
 
 router.post('/sleepdata', validateSleepData, (req, res) => {
     const sleepData = req.body;

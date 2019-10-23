@@ -23,16 +23,18 @@ router.post('/register', validateUserData, (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    const {username, password} = req.body;
-    Users.getUserBy({username})
+    const {email, password} = req.body;
+    Users.getUserBy({email})
     .then(user => {
         if(user && bcrypt.compare(password, user.password)) {
             const token = generateToken(user);
-            res.status(200).json({message: `Welcome, ${username}`, token: `${token}`});
+            res.status(200).json({message: `Welcome, ${user.username}`, token: `${token}`});
         } else {
-            console.log(username)
-            res.status(404).json({error: 'invalid user credentials'});
+            res.status(401).json({error: 'invalid user credentials'});
         }
+    })
+    .catch(err => {
+        res.status(500).json(err);
     })
 });
 
