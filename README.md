@@ -18,3 +18,5 @@ Endpoints:
 
     5. DELETE, PUT - /api/user/sleepdata/:id
         - Deleting and updating specific sleep data requires authentication
+        - PUT returns the specified changes to the sleep data with the specified id
+        - DELETE removes the sleep data with the specified id
