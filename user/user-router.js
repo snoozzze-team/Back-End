@@ -57,7 +57,7 @@ router.delete('/sleepdata/:id', (req, res) => {
     const {id} = req.params;
     Users.deleteUserSleepData(id)
     .then(data => {
-        res.status(200).json({message: 'successfully deleted sleep data'});
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);

@@ -15,7 +15,7 @@ router.post('/register', validateUserData, (req, res) => {
     userData.password = hash;
     Users.addUser(userData)
     .then(user => {
-        res.status(201).json({message: 'user created'});
+        res.status(201).json(user);
     })
     .catch(err => {
         res.status(500).json(err);
