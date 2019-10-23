@@ -7,7 +7,7 @@ function authenticate(req, res, next) {
   if (token) {
       jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
           if (err) {
-              res.status(401).json(err);
+              res.status(500).json(err);
           } else {
               req.user = {
                   id: decodedToken.id,

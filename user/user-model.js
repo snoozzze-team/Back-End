@@ -4,22 +4,16 @@ module.exports = {
     getUsers,
     getUserById,
     getUserBy,
+    addUser,
+    updateUser,
     getUserSleepData,
-    getUserSleepDataById,
     addUserSleepData,
     deleteUserSleepData,
-    updateUserSleepData,
-    addUser
+    updateUserSleepData
 }
 
 function getUsers() {
     return db('users');
-}
-
-function getUserById(id) {
-    return db('users')
-        .where({ id })
-        .first();
 }
 
 function getUserBy(filter) {
@@ -28,18 +22,18 @@ function getUserBy(filter) {
         .first();
 }
 
+async function addUser(user) {
+    const id = await db('users')
+        .insert(user);
+    return getUserById(id);
+}
+
 function getUserSleepData(id) {
     return db('sleepData as s')
         .join('users as u', 'u.id', 's.userId')
         .select('s.id', 's.userId', 's.dateTimeFrom', 's.dateTimeTo', 's.feels', 's.notes')
-        .where({userId: id})
+        .where({ userId: id })
         .orderBy('s.id');
-}
-
-function getUserSleepDataById(id) {
-    return db('sleepData')
-        .where({ id })
-        .first();
 }
 
 function addUserSleepData(data) {
@@ -50,17 +44,11 @@ function addUserSleepData(data) {
 function deleteUserSleepData(id) {
     return db('sleepData')
         .del()
-        .where({id})
+        .where({ id })
 }
 
 function updateUserSleepData(id, changes) {
     return db('sleepData')
         .update(changes)
-        .where({id})
-}
-
-async function addUser(user) {
-    const id = await db('users')
-        .insert(user);
-    return getUserById(id);
+        .where({ id })
 }

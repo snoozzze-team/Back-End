@@ -5,6 +5,8 @@ const moment = require('moment');
 
 const validateSleepData = require('../middleware/validate-sleep-data.js');
 
+//User
+
 router.get('/', (req, res) => {
     Users.getUsers()
     .then(users => {
@@ -15,13 +17,15 @@ router.get('/', (req, res) => {
     })
 });
 
+//Sleep data
+
 router.post('/sleepdata', validateSleepData, (req, res) => {
     const sleepData = req.body;
     const userId = req.user.id;
     sleepData.userId = userId;
     Users.addUserSleepData(sleepData)
     .then(data => {
-        res.json(data);
+        res.status(201).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
@@ -42,7 +46,7 @@ router.get('/sleepdata', (req, res) => {
             obj.dateTimeFrom = dateTimeFrom;
             obj.dateTimeTo = dateTimeTo;
         })
-        res.json(data);
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
@@ -53,19 +57,19 @@ router.delete('/sleepdata/:id', (req, res) => {
     const {id} = req.params;
     Users.deleteUserSleepData(id)
     .then(data => {
-        res.json({message: 'successfully deleted sleep data'});
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
     })
 })
 
-router.put('/sleepdata/:id', validateSleepData, (req, res) => {
+router.put('/sleepdata/:id', (req, res) => {
     const changes = req.body;
     const {id} = req.params;
     Users.updateUserSleepData(id, changes)
     .then(data => {
-        res.json(changes);
+        res.status(200).json(data);
     })
     .catch(err => {
         res.status(500).json(err);
