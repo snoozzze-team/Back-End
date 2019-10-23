@@ -33,7 +33,6 @@ router.get('/sleepdata', (req, res) => {
     Users.getUserSleepData(userId)
     .then(data => {
         data.map(obj => {
-            console.log(obj)
             const tempDateTimeFrom = obj.dateTimeFrom;
             const tempDateTimeTo = obj.dateTimeTo;
             const from = tempDateTimeFrom.slice('T:');
@@ -44,6 +43,29 @@ router.get('/sleepdata', (req, res) => {
             obj.dateTimeTo = dateTimeTo;
         })
         res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+})
+
+router.delete('/sleepdata/:id', (req, res) => {
+    const {id} = req.params;
+    Users.deleteUserSleepData(id)
+    .then(data => {
+        res.json({message: 'successfully deleted sleep data'});
+    })
+    .catch(err => {
+        res.status(500).json(err);
+    })
+})
+
+router.put('/sleepdata/:id', validateSleepData, (req, res) => {
+    const changes = req.body;
+    const {id} = req.params;
+    Users.updateUserSleepData(id, changes)
+    .then(data => {
+        res.json(changes);
     })
     .catch(err => {
         res.status(500).json(err);
