@@ -11,16 +11,16 @@ URL: /api/auth/register
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
+| Name         | Type   | Required | Description              |
+|--------------|--------|----------|--------------------------|
+| Content-Type | String | Yes      | Must be application/json |
 
 ### Body
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| email | String | Yes | User's email |
-| username | String | Yes | User's chosen username |
-| password | String | Yes | User's chosen password |
+| Name     | Type   | Required | Description            |
+|----------|--------|----------|------------------------|
+| email    | String | Yes      | User's email           |
+| username | String | Yes      | User's chosen username |
+| password | String | Yes      | User's chosen password |
 
 ### Example
 
@@ -50,15 +50,15 @@ URL: /api/auth/login
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
+| Name         | Type   | Required | Description              |
+|--------------|--------|----------|--------------------------|
+| Content-Type | String | Yes      | Must be application/json |
 
 ### Body
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| email | String | Yes | User's email address |
-| password | String | Yes | User's password |
+| Name     | Type   | Required | Description          |
+|----------|--------|----------|----------------------|
+| email    | String | Yes      | User's email address |
+| password | String | Yes      | User's password      |
 
 
 ### Example
@@ -89,10 +89,10 @@ URL: /api/users/sleepdata
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
-| Authorization | String | Yes | Uses the token from login/register |
+| Name          | Type   | Required | Description                        |
+|---------------|--------|----------|------------------------------------|
+| Content-Type  | String | Yes      | Must be application/json           |
+| Authorization | String | Yes      | Uses the token from login/register |
 
 ### Example
 
@@ -128,18 +128,18 @@ URL: /api/users/sleepdata
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
-| Authorization | String | Yes | Token from registration/login |
+| Name          | Type   | Required | Description                   |
+|---------------|--------|----------|-------------------------------|
+| Content-Type  | String | Yes      | Must be application/json      |
+| Authorization | String | Yes      | Token from registration/login |
 
 ### Body
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| dateTimeFrom | String | Yes | Date and time when user falls asleep |
-| dateTimeTo | String | Yes | Date and time when user wakes |
-| feels | string | yes | User's mood after wakeup |
-| notes | string | No | Any side notes of sleep or wakeup |
+| Name         | Type   | Required | Description                          |
+|--------------|--------|----------|--------------------------------------|
+| dateTimeFrom | String | Yes      | Date and time when user falls asleep |
+| dateTimeTo   | String | Yes      | Date and time when user wakes        |
+| feels        | string | yes      | User's mood after wakeup             |
+| notes        | string | No       | Any side notes of sleep or wakeup    |
 
 ### Example
 
@@ -174,10 +174,35 @@ URL: /api/users/sleepdata/:id (Where ID is sleep data object ID)
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
-| Authorization | String | Yes | Token from registration/login |
+| Name          | Type   | Required | Description                   |
+|---------------|--------|----------|-------------------------------|
+| Content-Type  | String | Yes      | Must be application/json      |
+| Authorization | String | Yes      | Token from registration/login |
+
+### Example
+
+Returns an array of the remaining sleep data in the following form:
+
+```json
+[
+    {
+        "id": 1,
+        "userId": "1",
+        "dateTimeFrom": "2019-10-22T23:00",
+        "dateTimeTo": "2019-10-23T08:00",
+        "feels": "4",
+        "notes":"fine"
+    },
+     {
+        "id": 2,
+        "userId": "1",
+        "dateTimeFrom": "2019-10-23T23:00",
+        "dateTimeTo": "2019-10-24T08:00",
+        "feels": "4",
+        "notes":"fine"
+    }
+]
+```
 
 ### Response
 
@@ -198,23 +223,24 @@ URL: /api/users/sleepdata/:id (Where ID is sleep data object ID)
 
 ### Headers
 
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| Content-Type | String | Yes | Must be application/json |
-| Authorization | String | Yes | Token from registration/login |
+| Name          | Type   | Required | Description                   |
+|---------------|--------|----------|-------------------------------|
+| Content-Type  | String | Yes      | Must be application/json      |
+| Authorization | String | Yes      | Token from registration/login |
 
 ### Body
-| Name | Type | Required | Description |
-| ---- | ---- | -------- | ----------- |
-| dateTimeFrom | String | no | Date and time when user falls asleep |
-| dateTimeTo | String | no | Date and time when user wakes |
-| feels | string | No | User's mood after wakeup |
-| notes | string | No | Any side notes of sleep or wakeup |
+| Name         | Type   | Required | Description                          |
+|--------------|--------|----------|--------------------------------------|
+| dateTimeFrom | String | no       | Date and time when user falls asleep |
+| dateTimeTo   | String | no       | Date and time when user wakes        |
+| feels        | string | No       | User's mood after wakeup             |
+| notes        | string | No       | Any side notes of sleep or wakeup    |
 
 ### Example
 
 ```json
 {
+    "id": 1,
 	"dateTimeFrom": "2019-10-22T23:00",
     "dateTimeTo": "2019-10-23T08:00",
     "feels": "4",
