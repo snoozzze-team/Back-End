@@ -5,6 +5,7 @@ const secrets = require('../config/secrets.js');
 function authenticate(req, res, next) {
   const token = req.headers.authorization;
   if (token) {
+      console.log(token)
       jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
           if (err) {
               res.status(500).json(err);

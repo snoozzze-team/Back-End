@@ -12,18 +12,8 @@ const userRouter = require('../user/user-router.js');
 const server = express();
 
 server.use(express.json());
-server.use(cors({
-    credentials: true
-}));
+server.use(cors());
 server.use(helmet());
-
-server.options('*', cors());
-
-server.all('/', function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-});
 
 //use routers
 server.use('/api/auth', authRouter);

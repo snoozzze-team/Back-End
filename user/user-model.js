@@ -2,10 +2,9 @@ const db = require('../database/dbConfig.js');
 
 module.exports = {
     getUsers,
-    getUserById,
     getUserBy,
+    getUserById,
     addUser,
-    updateUser,
     getUserSleepData,
     addUserSleepData,
     deleteUserSleepData,
@@ -20,6 +19,12 @@ function getUserBy(filter) {
     return db('users')
         .where(filter)
         .first();
+}
+
+function getUserById(id) {	
+    return db('users')	
+        .where({ id })	
+        .first();	
 }
 
 async function addUser(user) {
