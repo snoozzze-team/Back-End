@@ -15,6 +15,7 @@ router.post('/register', validateUserData, (req, res) => {
     userData.password = hash;
     Users.addUser(userData)
     .then(user => {
+        console.log(user);
         res.status(201).json(user);
     })
     .catch(err => {

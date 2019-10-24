@@ -21,14 +21,14 @@ function getUserBy(filter) {
         .first();
 }
 
-function getUserById(id) {	
-    return db('users')	
-        .where({ id })	
-        .first();	
+function getUserById(id) {
+    return db('users')
+        .where({ id })
+        .first();
 }
 
 async function addUser(user) {
-    const id = await db('users')
+    const [id] = await db('users')
         .insert(user);
     return getUserById(id);
 }
@@ -41,9 +41,15 @@ function getUserSleepData(id) {
         .orderBy('s.id');
 }
 
-function addUserSleepData(data) {
+function getUserSleepDataBy(id) {
     return db('sleepData')
+        .where({id});
+}
+
+async function addUserSleepData(data) {
+    const [sleepData] = await db('sleepData')
         .insert(data);
+    return getUserSleepDataBy(sleepData)
 }
 
 function deleteUserSleepData(id) {
