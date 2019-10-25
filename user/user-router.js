@@ -10,7 +10,7 @@ const validateSleepData = require('../middleware/validate-sleep-data.js');
 router.get('/', (req, res) => {
     Users.getUsers()
         .then(users => {
-            res.json(users);
+            res.status(200).json(users);
         })
         .catch(err => {
             res.status(500).json(err);
