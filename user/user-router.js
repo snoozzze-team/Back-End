@@ -23,6 +23,7 @@ router.post('/sleepdata', validateSleepData, (req, res) => {
     const sleepData = req.body;
     const userId = req.user.id;
     sleepData.userId = userId;
+    res.set('Access-Control-Allow-Origin', '*');
     Users.addUserSleepData(sleepData)
         .then(data => {
             res.status(201).json(data);
@@ -55,6 +56,7 @@ router.get('/sleepdata', (req, res) => {
 
 router.delete('/sleepdata/:id', (req, res) => {
     const { id } = req.params;
+    res.set('Access-Control-Allow-Origin', '*');
     Users.deleteUserSleepData(id)
         .then(data => {
             Users.getUserSleepData(req.user.id)
@@ -69,7 +71,8 @@ router.delete('/sleepdata/:id', (req, res) => {
 
 router.put('/sleepdata/:id', (req, res) => {
     const changes = req.body;
-    const { id } = req.params;
+    const { id } = req.params;  
+    res.set('Access-Control-Allow-Origin', '*');
     Users.updateUserSleepData(id, changes)
         .then(data => {
             res.status(200).json({id, ...changes});
